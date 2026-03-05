@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        int n=nums.size();
+        map<long long,int>preSum;
+        long long sum=0;
+        int len=0;
+
+        for(int i=0; i<n; i++)
+        {
+            sum=sum + nums[i];
+
+            if(sum==k)
+            {
+                len=max(len,i+1);
+            }
+
+            long long rem=sum-k;
+
+            if(preSum.find(rem) != preSum.end())
+            {
+                int len1 = i - preSum[rem];
+                len= max(len, len1);
+            }
+
+            if(preSum.find(sum)==preSum.end())
+            {
+                preSum[sum]=i;
+            }
+        }
+        return len;
+
+        
+    }
+};
